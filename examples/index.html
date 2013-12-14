@@ -10,13 +10,12 @@
   <title>Sample of THETA Viewer</title>
 </head>
 <body>
-  <div id="theta-viewer"></div>
+  <div id="theta-viewer" data-image="img/R0010035.JPG" data-zenith-x="0" data-zenith-y="0" data-azimuth="0" data-elevation="0"></div>
   <script>
 /*global jQuery */
 (function ($) {
     'use strict';
-    // #theta-viewerにパノラマ画像img/R0010035.JPGを表示
-    $("#theta-viewer").createThetaViewer('img/R0010035.JPG');
+    $("#theta-viewer").createThetaViewer();
 }(jQuery));
   </script>
 </body>

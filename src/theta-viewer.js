@@ -11,7 +11,7 @@
 (function ($) {
     'use strict';
 
-    var ThetaViewer = function (element, texture) {
+    var ThetaViewer = function (element, texture, zenithX, zenithY, azimuth, elevation) {
 
         // レンダラーの生成と要素の追加
         function createRenderer(that, element) {
@@ -40,16 +40,22 @@
             var fov    = 72, // 視野角
                 aspect = element.width() / element.height(), // アスペクト比
                 near   = 0.1, // 奥行きの表示範囲の最小値
-                far    = 1000; // 奥行きの表示範囲の最大値
+                far    = 1000, // 奥行きの表示範囲の最大値
+                phi    = (90 - elevation) * Math.PI / 180,
+                theta  = azimuth * Math.PI / 180;
 
             that.camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
             // カメラの注視点
-            that.camera.lookAt({ x: 1, y: 0, z: 0 });
+            that.camera.lookAt({
+                x: Math.sin(phi) * Math.cos(theta),
+                y: Math.cos(phi),
+                z: Math.sin(phi) * Math.sin(theta)
+            });
             that.scene.add(that.camera);
         }
 
         // 形状(球体)の生成
-        function buildGeomtry(that, texture) {
+        function buildGeomtry(that, texture, zx, zy) {
             var radius = 1,                    // 半径
                 widthSegments  = 32,           // 横方向分割数
                 heightSegments = 16,           // 縦方向分割数
@@ -80,6 +86,10 @@
 
             // 球体の内側と外側を反転
             matrix = new THREE.Matrix4().makeScale(1, 1, -1);
+            that.geometry.applyMatrix(matrix);
+            matrix = new THREE.Matrix4().makeRotationZ(zy * Math.PI / 180);
+            that.geometry.applyMatrix(matrix);
+            matrix = new THREE.Matrix4().makeRotationX(zx * Math.PI / 180);
             that.geometry.applyMatrix(matrix);
         }
 
@@ -210,7 +220,7 @@
         buildScene(this);
         createLight(this);
         createCamera(this);
-        buildGeomtry(this, texture);
+        buildGeomtry(this, texture, zenithX, zenithY);
         buildMaterial(this, texture);
         createMesh(this);
         addEventListeners(this, element);
@@ -224,18 +234,17 @@
     };
 
     // jQueryプラグイン化
-    $.fn.createThetaViewerWithTexture = function (texture) {
-        var thetaViewer = new ThetaViewer(this, texture);
-        thetaViewer.render();
-        return this;
-    };
-
-    $.fn.createThetaViewer = function (image_url) {
-        var texture,
+    $.fn.createThetaViewer = function () {
+        var image_url = this.data("image"),
+            zenithX = this.data("zenith-x") || 0,
+            zenithY = this.data("zenith-y") || 0,
+            azimuth = this.data("azimuth") || 0,
+            elevation = this.data("elevation") || 0,
+            texture,
             mapping,
             that = this,
             success = function () {
-                var thetaViewer = new ThetaViewer(that, texture);
+                var thetaViewer = new ThetaViewer(that, texture, zenithX, zenithY, azimuth, elevation);
                 thetaViewer.render();
             },
             error   = function () {
