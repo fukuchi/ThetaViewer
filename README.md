@@ -27,7 +27,7 @@ Setup
   <title>Sample of THETA Viewer</title>
 </head>
 <body>
-  <div id="theta-viewer" data-image="img/theta.jpg" data-zenithX="-3.0" data-zenithY="2.0" data-azimuth="270" data-elevation="-10"></div>
+  <div id="theta-viewer" data-image="img/theta.jpg" data-zenith-x="-3.0" data-zenith-y="2.0" data-azimuth="270" data-elevation="-10"></div>
   <script>
 /*global jQuery */
 (function ($) {
