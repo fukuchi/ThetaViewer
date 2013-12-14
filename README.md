@@ -94,5 +94,5 @@ MIT License
 Author
 ------
 
-[小久保温(Atsushi Kokubo)](http://www.dma.aoba.sendai.jp/~acchan/).
-[Kentaro Fukuchi](http://fukuchi.org/)
+- [小久保温(Atsushi Kokubo)](http://www.dma.aoba.sendai.jp/~acchan/).
+- [Kentaro Fukuchi](http://fukuchi.org/)
