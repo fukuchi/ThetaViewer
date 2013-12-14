@@ -32,7 +32,6 @@ Setup
 /*global jQuery */
 (function ($) {
     'use strict';
-    // #theta-viewerにパノラマ画像img/theta.jpgを表示
     $("#theta-viewer").createThetaViewer();
 }(jQuery));
   </script>
