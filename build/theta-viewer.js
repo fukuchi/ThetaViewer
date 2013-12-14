@@ -115,8 +115,8 @@
                 onMouseDownLng   = 0,     // マウス押し下げ位置の経度
                 onMouseDownX     = 0,     // マウス押し下げ位置のx座標
                 onMouseDownY     = 0,     // マウス押し下げ位置のy座標
-                lat              = 0,     // 現在のカメラの緯度
-                lng              = 0,     // 現在のカメラの経度
+                lat              = elevation, // 現在のカメラの緯度
+                lng              = azimuth,   // 現在のカメラの経度
                 camera           = that.camera,
                 renderer         = that.renderer;
 
